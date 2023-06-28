@@ -1,32 +1,41 @@
-const APIURL = `https://api.github.com/users/${inputData}`;
-const main = document.getElementById("main");
+const APIURL = `https://api.github.com/users/`;
+const avatarContainer = document.querySelector(".avatar");
+const ul = document.getElementById("profileUl");
 
-main.addEventListener("keydown", (evento) => {
-  if (evento.keycode === 13) {
-    let inputData = document.getElementById("search").value;
-    return inputData;
+const input = document.getElementById("search");
+
+input.addEventListener("keydown", (event) => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    const inputData = input.value;
+    console.log("Enter key pressed. Input data:", inputData);
+    generateProfile(inputData);
   }
-  return inputData;
 });
 
-async function generateProfile() {
+async function generateProfile(inputData) {
   const config = {
     headers: {
       Accept: "application/json",
     },
   };
 
-  const res = await fetch(APIURL, config)
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-  const data = await res.json();
+  try {
+    const response = await axios.get(APIURL + inputData, config);
+    const data = response.data;
+    console.log(data);
 
-  main.innerHTML = data.profile;
-}
-
-main.addEventListener("keydown", (evento) => {
-  if (evento.keycode === 13) {
-    let inputData = document.getElementById("search").value;
-    return inputData;
+    if(data) {
+        const avatarUrl = data.avatar_url.value
+        let img = document.createElement('img')
+        avatar.src = avatarUrl
+        document.getElementById('avatar').appendChild(img)
+        return avatarContainer
+    } else {
+        return null
+    }
+    // Aquí puedes manipular la respuesta y mostrar la información en tu página
+  } catch (error) {
+    console.log(error);
   }
-});
+}
