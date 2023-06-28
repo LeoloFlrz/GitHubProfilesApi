@@ -1,7 +1,13 @@
 const APIURL = `https://api.github.com/users/${inputData}`;
 const main = document.getElementById("main");
 
-generateProfile();
+main.addEventListener("keydown", (evento) => {
+  if (evento.keycode === 13) {
+    let inputData = document.getElementById("search").value;
+    return inputData;
+  }
+  return inputData;
+});
 
 async function generateProfile() {
   const config = {
