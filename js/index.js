@@ -25,15 +25,20 @@ async function generateProfile(inputData) {
     const data = response.data;
     console.log(data);
 
-    if(data) {
-        const avatarUrl = data.avatar_url.value
-        let img = document.createElement('img')
-        avatar.src = avatarUrl
-        document.getElementById('avatar').appendChild(img)
-        return avatarContainer
-    } else {
-        return null
-    }
+    if (data) {
+        const avatarUrl = data.avatar_url;
+        let img = document.createElement('img');
+        img.src = avatarUrl;
+      
+        // Limpiar el contenido del contenedor antes de agregar la nueva imagen
+        avatar.innerHTML = '';
+      
+        avatar.appendChild(img);
+        return avatar;
+      } else {
+        return null;
+      }
+      
     // Aquí puedes manipular la respuesta y mostrar la información en tu página
   } catch (error) {
     console.log(error);
