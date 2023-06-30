@@ -1,6 +1,6 @@
 const APIURL = `https://api.github.com/users/`;
-const avatarContainer = document.querySelector(".avatar");
 const ul = document.getElementById("profileUl");
+const userContainer = document.querySelector(".user-info");
 
 const input = document.getElementById("search");
 
@@ -26,20 +26,56 @@ async function generateProfile(inputData) {
     console.log(data);
 
     if (data) {
-        const avatarUrl = data.avatar_url;
-        let img = document.createElement('img');
-        img.src = avatarUrl;
-      
-        // Limpiar el contenido del contenedor antes de agregar la nueva imagen
-        avatar.innerHTML = '';
-      
-        avatar.appendChild(img);
-        return avatar;
+      const avatarUrl = data.avatar_url;
+      let img = document.createElement("img");
+      img.src = avatarUrl;
+      avatar.innerHTML = "";
+      avatar.appendChild(img);
+
+      let profileName = data.name;
+      console.log(profileName);
+      const nameContainer = document.getElementById("userName");
+      if (profileName) {
+        nameContainer.textContent = profileName;
       } else {
-        return null;
+        nameContainer.textContent = 'User Name Not Available';
       }
-      
-    // Aquí puedes manipular la respuesta y mostrar la información en tu página
+
+      const bioContainer = document.getElementById('bioContainer')
+      let profileBio = data.bio
+      console.log(profileBio)
+      if(profileBio) {
+        bioContainer.textContent = profileBio
+      } else {
+        bioContainer.textContent = 'User Bio Not Available'
+      }
+
+      const statsContainer = document.getElementById('statsContainer')
+      const followersContainer = document.getElementById('followers')
+      const followingContainer = document.getElementById('following')
+      const reposContainer = document.getElementById('repos')
+
+      let profileFollowers = data.followers
+      let profileFollowing = data.following
+      let profileRepos = data.repos_url
+      if(profileFollowers && profileFollowing && profileRepos){
+        followersContainer.textContent = profileFollowers + ' Followers'
+        followingContainer.textContent = profileFollowing + ' Following'
+        if (profileRepos) {
+          let reposCount = profileRepos.length
+          reposContainer.textContent = reposCount + ' Repos'
+        }
+
+        // statsContainer.textContent = profileRepos + ' Repos'
+      } else {
+        statsContainer.textContent = 'User Info Not Available'
+      }
+
+
+      return avatar;
+    } else {
+      return null;
+    }
   } catch (error) {
     console.log(error);
   }
