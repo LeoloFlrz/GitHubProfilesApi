@@ -57,13 +57,13 @@ async function generateProfile(inputData) {
 
       let profileFollowers = data.followers
       let profileFollowing = data.following
-      let profileRepos = data.repos_url
+      let profileRepos = data.public_repos
       if(profileFollowers && profileFollowing && profileRepos){
         followersContainer.textContent = profileFollowers + ' Followers'
         followingContainer.textContent = profileFollowing + ' Following'
         if (profileRepos) {
-          let reposCount = profileRepos.length
-          reposContainer.textContent = reposCount + ' Repos'
+          reposContainer.textContent = profileRepos + ' Repos'
+          
         }
 
         // statsContainer.textContent = profileRepos + ' Repos'
